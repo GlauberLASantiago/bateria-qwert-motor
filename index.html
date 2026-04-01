@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bateria QWERTY Core</title>
+
+  <script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script>
+
+  <!-- Samples usados pelo mapeamento atual -->
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12835_17_JCLive_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12836_1_JCLive_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12837_1_JCLive_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12838_1_JCLive_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12839_1_JCLive_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12840_1_JCLive_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12841_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12842_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12843_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12844_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12845_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12846_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12847_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12848_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12849_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12850_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12851_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12852_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12853_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12854_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12855_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12856_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12857_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12858_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12859_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12860_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12861_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12863_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12864_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12865_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12866_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12880_0_FluidR3_GM_sf2_file.js"></script>
+  <script src="https://surikov.github.io/webaudiofontdata/sound/12881_0_FluidR3_GM_sf2_file.js"></script>
+</head>
+<body>
+
+<!-- DESCRIÇÃO DO MOTOR -->
+<div style="max-width:800px; margin:20px auto; font-family:Arial, sans-serif; line-height:1.6;">
+  <p>
+    Este código implementa um motor de bateria MIDI baseado na Web Audio API, permitindo disparar sons de percussão através do teclado do computador (mapeamento QWERTY). Cada tecla é associada a um "pitch" MIDI e a um sample específico, simulando um kit de bateria.
+  </p>
+
+  <p>
+    A lógica central está encapsulada na classe <strong>DrumEngine</strong>, que gerencia carregamento de samples, reprodução de sons, dinâmica (velocity) e comportamentos musicais como choke (ex: hi-hat).
+  </p>
+
+  <p>
+    Para reutilização em outras aplicações:<br>
+    - Use <strong>playByPitch(pitch)</strong> para integrar com controladores MIDI<br>
+    - Use <strong>playByCode(code)</strong> para teclado<br>
+    - Customize o KEY_MAP para novos layouts
+  </p>
+
+  <p>
+    Este motor pode ser adaptado para drum machines, sequencers, pads virtuais e interfaces de performance.
+  </p>
+
+  <hr>
+
+  <p style="font-size:0.9em; color:#555;">
+    Baseado no projeto WebAudioFont de Sergey Surikov (https://github.com/surikov/webaudiofont)<br>
+    Desenvolvido por prof. Glauber Santiago - UFSCar
+  </p>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
+
+  const KEY_MAP = {
+    Digit1: { pitch: 58, file: '_drum_58_0_FluidR3_GM_sf2_file' },
+    Digit2: { pitch: 65, file: '_drum_65_0_FluidR3_GM_sf2_file' },
+    Digit3: { pitch: 66, file: '_drum_66_0_FluidR3_GM_sf2_file' },
+    Digit4: { pitch: 80, file: '_drum_80_0_FluidR3_GM_sf2_file' },
+    Digit5: { pitch: 81, file: '_drum_81_0_FluidR3_GM_sf2_file' },
+    KeyQ: { pitch: 56, file: '_drum_56_0_FluidR3_GM_sf2_file' },
+    KeyW: { pitch: 54, file: '_drum_54_0_FluidR3_GM_sf2_file' },
+    KeyE: { pitch: 60, file: '_drum_60_0_FluidR3_GM_sf2_file' },
+    KeyR: { pitch: 61, file: '_drum_61_0_FluidR3_GM_sf2_file' },
+    KeyT: { pitch: 63, file: '_drum_63_0_FluidR3_GM_sf2_file' },
+    KeyY: { pitch: 64, file: '_drum_64_0_FluidR3_GM_sf2_file' },
+    KeyU: { pitch: 59, file: '_drum_59_0_FluidR3_GM_sf2_file' },
+    KeyI: { pitch: 53, file: '_drum_53_0_FluidR3_GM_sf2_file' },
+    KeyO: { pitch: 55, file: '_drum_55_0_FluidR3_GM_sf2_file' },
+    KeyP: { pitch: 52, file: '_drum_52_0_FluidR3_GM_sf2_file' },
+    KeyA: { pitch: 36, file: '_drum_36_1_JCLive_sf2_file' },
+    KeyS: { pitch: 40, file: '_drum_40_1_JCLive_sf2_file' },
+    KeyD: { pitch: 39, file: '_drum_39_1_JCLive_sf2_file' },
+    KeyF: { pitch: 42, file: '_drum_42_0_FluidR3_GM_sf2_file' },
+    KeyG: { pitch: 44, file: '_drum_44_0_FluidR3_GM_sf2_file' },
+    KeyH: { pitch: 46, file: '_drum_46_0_FluidR3_GM_sf2_file' },
+    KeyJ: { pitch: 51, file: '_drum_51_0_FluidR3_GM_sf2_file' },
+    KeyK: { pitch: 49, file: '_drum_49_0_FluidR3_GM_sf2_file' },
+    KeyL: { pitch: 57, file: '_drum_57_0_FluidR3_GM_sf2_file' },
+    KeyZ: { pitch: 35, file: '_drum_35_17_JCLive_sf2_file' },
+    KeyX: { pitch: 38, file: '_drum_38_1_JCLive_sf2_file' },
+    KeyC: { pitch: 37, file: '_drum_37_1_JCLive_sf2_file' },
+    KeyV: { pitch: 41, file: '_drum_41_0_FluidR3_GM_sf2_file' },
+    KeyB: { pitch: 43, file: '_drum_43_0_FluidR3_GM_sf2_file' },
+    KeyN: { pitch: 45, file: '_drum_45_0_FluidR3_GM_sf2_file' },
+    KeyM: { pitch: 47, file: '_drum_47_0_FluidR3_GM_sf2_file' },
+    Comma: { pitch: 48, file: '_drum_48_0_FluidR3_GM_sf2_file' },
+    Period: { pitch: 50, file: '_drum_50_0_FluidR3_GM_sf2_file' }
+  };
+
+  class DrumEngine {
+    constructor() {
+      this.audioContext = new AudioContextCtor();
+      this.player = new WebAudioFontPlayer();
+      this.output = this.audioContext.createGain();
+      this.output.connect(this.audioContext.destination);
+      this.boundKeyDown = this.handleKeyDown.bind(this);
+      this.attachKeyboard();
+    }
+
+    async playByPitch(pitch, velocity = 0.85) {
+      const mapping = Object.values(KEY_MAP).find(m => m.pitch === pitch);
+      if (!mapping) return;
+
+      const gain = this.audioContext.createGain();
+      gain.gain.value = velocity;
+      gain.connect(this.output);
+
+      this.player.queueWaveTable(this.audioContext, gain, window[mapping.file], 0, pitch, 3);
+    }
+
+    async playByCode(code) {
+      if (KEY_MAP[code]) {
+        return this.playByPitch(KEY_MAP[code].pitch);
+      }
+    }
+
+    handleKeyDown(e) {
+      if (!KEY_MAP[e.code]) return;
+      e.preventDefault();
+      this.playByCode(e.code);
+    }
+
+    attachKeyboard() {
+      window.addEventListener('keydown', this.boundKeyDown);
+    }
+  }
+
+  window.drumEngine = new DrumEngine();
+})();
+</script>
+</body>
+</html>
